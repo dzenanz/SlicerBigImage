@@ -1398,7 +1398,7 @@ class BigImageViewerLogic(ScriptedLoadableModuleLogic):
       return os.path.dirname(slicer.app.slicerUserSettingsFilePath) + '/OpenSlide'
 
   def getOpenSlideExecutableFilename(self):
-      return 'openslide.jar'
+      return 'libopenslide-1.dll'
 
   def findOpenSlide(self):
       # Try to find the executable at specific paths
@@ -1447,7 +1447,7 @@ class BigImageViewerLogic(ScriptedLoadableModuleLogic):
       openSlideTargetDirectory = self.getDownloadedOpenSlideDirectory()
       # The number in the filePath can be incremented each time a significantly different OpenSlide version
       # is to be introduced (it prevents reusing a previously downloaded package).
-      filePath = slicer.app.temporaryPath + '/OpenSlide-package-slicer-01.zip'
+      filePath = slicer.app.temporaryPath + '/openslide-bin-4.0.0.6-windows-x64.zip'
       success = self.unzipOpenSlide(filePath, openSlideTargetDirectory)
       if success:
           # there was a valid downloaded package already
@@ -1456,7 +1456,7 @@ class BigImageViewerLogic(ScriptedLoadableModuleLogic):
       # List of mirror sites to attempt download OpenSlide pre-built binaries from
       urls = []
       if os.name == 'nt':
-          urls.append('https://github.com/openslide/openslide-winbuild/releases/download/v20160612/openslide-win64-20160612.zip')
+          urls.append('https://github.com/openslide/openslide-bin/releases/download/v4.0.0.6/openslide-bin-4.0.0.6-windows-x64.zip')
       else:
           # TODO: implement downloading for Linux/MacOS?
           pass
