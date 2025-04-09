@@ -199,8 +199,12 @@ class BigImageViewerWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
     newPos = interactor.GetEventPosition()
 
-    self.ui.topLeftXSliderWidget.setValue(self.ui.topLeftXSliderWidget.value + 10.0*(self.leftMouseButtonPos[0] - newPos[0]))
-    self.ui.topLeftYSliderWidget.setValue(self.ui.topLeftYSliderWidget.value + 10.0*(newPos[1] - self.leftMouseButtonPos[1])) # x and y are different so the orders are different
+    zoom = self.ui.ObjectiveMagnificationSlicerWidget.value
+    # print(f'old: {self.leftMouseButtonPos}, new: {newPos}. Zoom: {zoom}')
+
+    self.ui.topLeftXSliderWidget.setValue(self.ui.topLeftXSliderWidget.value + (10.0 / zoom) * (self.leftMouseButtonPos[0] - newPos[0]))
+    # In Slicer, Y coordinate points "up". In OpenSlide, Y points "down". That's why it is inverted here
+    self.ui.topLeftYSliderWidget.setValue(self.ui.topLeftYSliderWidget.value + (10.0 / zoom) * (newPos[1] - self.leftMouseButtonPos[1]))
 
     #self.ui.topLeftYSliderWidget.update()
 
